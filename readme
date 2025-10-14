@@ -1,0 +1,52 @@
+1. Core Node.js Concepts
+
+- What it is: Node.js is a JavaScript runtime environment, which means it lets you run JavaScript code outside of a web browser.
+- Key Feature (The "Magic"): It uses an event-driven, non-blocking I/O model. This makes it very efficient and fast for applications that handle many connections, like web servers and APIs.
+- Engine: It's built on Chrome's high-performance V8 JavaScript engine.
+
+2. Getting Started & Running Code
+
+- Installation: Download the LTS (Long Term Support) version from the official nodejs.org website.
+- Verification: After installing, open your terminal and use node -v and npm -v to confirm it's installed correctly.
+- Running a File: You execute any Node.js script from your terminal with the command: node your_file_name.js.
+
+3. Modules: Organizing Your Code
+
+- Concept: The Node.js module system allows you to split your code into separate, reusable files.
+- Importing: You use the require() function to import a module.
+  - require('http') imports a built-in Core Module.
+  - require('./my_module') imports a local file you created.
+  - require('express') imports a third-party module from node_modules.
+- Exporting: You use module.exports = { ... } in a file to make its functions or variables available to other files that require it.
+
+4. NPM: The Node Package Manager
+
+- What it is: A command-line tool and the world's largest software registry (online library) of reusable code packages.
+- package.json: The most important file in a Node project. It acts as a manifest, keeping track of project metadata and its dependencies.
+  - Created using the npm init command.
+- npm install <package-name>: The command to download a third-party package. It does two things:
+  1. Places the package's code in a node_modules folder.
+  2. Adds the package as a dependency to your package.json file.
+- node_modules folder: Contains all the code for your project's dependencies. This folder can get very large and should not be committed to version control (like Git).
+
+5. Building a Web Server: The Evolution
+   Stage 1: The Basic http Module
+
+- Node's built-in http module is the low-level foundation for creating servers.
+- Key function: http.createServer((req, res) => { ... }). The callback function runs for every single request.
+- req (Request) & res (Response): Objects representing the incoming request and the outgoing response you will build.
+- Routing: Done manually by checking the req.url property with if/else if/else statements. This becomes difficult to manage quickly.
+- Starting the server: server.listen(port, hostname, () => { ... }).
+  Stage 2: Improving Workflow with nodemon
+- Problem: Having to stop and restart your server (node server.js) every time you save a file.
+- Solution: nodemon is a development tool that automatically restarts your server when it detects a file change.
+- Usage: Install it globally (npm install -g nodemon) and run your app with nodemon your_file_name.js.
+  Stage 3: Using the Express.js Framework
+- Why?: To simplify everything about building a web server, especially routing and handling requests.
+- Setup:
+  1. Install it in your project: npm install express.
+  2. Create an application object: const app = express().
+- Simplified Routing: Replaces the messy if/else block with clean methods. The pattern is app.METHOD(PATH, HANDLER).
+  - Example: app.get('/', (req, res) => { ... }); creates a rule that only runs for GET requests to the home page (/).
+- Simplified Responses: Use res.send() to easily send back a response. Express automatically sets the correct headers for you.
+- Starting the server: Very similar to the http module: app.listen(port, hostname, () => { ... }).

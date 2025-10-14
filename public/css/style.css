@@ -1,0 +1,18 @@
+/* public/css/style.css */
+
+body {
+    background-color: #2c3e50; /* A dark blue-grey */
+    font-family: sans-serif;
+    color: #ecf0f1; /* A light grey */
+    text-align: center;
+    padding-top: 50px;
+}
+
+h1 {
+    color: #3498db; /* A bright blue */
+    font-size: 3em;
+}
+
+p {
+    font-size: 1.2em;
+}
