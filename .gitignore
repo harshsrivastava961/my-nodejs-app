@@ -2,3 +2,17 @@ node_modules/
 .env
 .DS_Store
 .npmrc
+database.sqlite
+```*(I've added `database.sqlite` as well, as you typically don't commit your development database file.)*
+
+**5. Load and Use the Environment Variables**
+Now, we need to tell our application to load the variables from the `.env` file. This should be the **very first thing** that happens in your application.
+
+Open your main server file, `express_server.js`, and add this line at the absolute top:
+
+```javascript
+// express_server.js
+
+require('dotenv').config(); // <-- ADD THIS AT THE VERY TOP
+
+const express = require('express');

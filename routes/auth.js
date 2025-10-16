@@ -72,7 +72,8 @@ router.post('/login', async (req, res) => {
         // 4. Sign the token
         jwt.sign(
             payload,
-            'mySecretKey', // THIS SHOULD BE A SECRET, COMPLEX KEY STORED IN ENVIRONMENT VARIABLES
+            // 'mySecretKey', // THIS SHOULD BE A SECRET, COMPLEX KEY STORED IN ENVIRONMENT VARIABLES
+            process.env.JWT_SECRET, // <-- USE THE ENV VARIABLE
             { expiresIn: '1h' }, // Token expires in 1 hour
             (err, token) => {
                 if (err) throw err;

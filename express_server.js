@@ -20,7 +20,7 @@ const authRouter = require("./routes/auth");
 
 // 3. Define the hostname and port
 const hostname = "127.0.0.1";
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 // 4. Define routes using app.get(), app.post(), etc.
 // This is much cleaner than the if/else if structure.

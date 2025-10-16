@@ -3,11 +3,13 @@
 const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
+const auth = require("../middleware/auth");
 
 // --- 1. CONNECT TO MONGODB ---
 // We define the connection string. 'mydatabase' is the name of the database.
 // MongoDB will create it for us if it doesn't exist.
-const mongoURI = "mongodb://127.0.0.1:27017/mydatabase";
+// Prefer env var DB_URI, fall back to local default for development.
+const mongoURI = process.env.DB_URI || "mongodb://127.0.0.1:27017/mydatabase";
 
 mongoose
   .connect(mongoURI)
@@ -19,7 +21,7 @@ mongoose
 const userSchema = new mongoose.Schema({
   name: { type: String, required: true },
   email: { type: String, required: true, unique: true },
-  password: { type: String, required: true }, 
+  password: { type: String, required: true },
   createdAt: { type: Date, default: Date.now }, // Automatically set the creation date
 });
 
@@ -30,7 +32,7 @@ const User = mongoose.model("User", userSchema);
 // --- 3. CREATE THE API ROUTES ---
 
 // GET all users
-router.get("/", async (req, res) => {
+router.get("/", auth, async (req, res) => {
   try {
     const users = await User.find(); // .find() gets all documents
     res.json(users);
@@ -40,7 +42,7 @@ router.get("/", async (req, res) => {
 });
 
 // GET a single user by ID
-router.get("/:id", async (req, res) => {
+router.get("/:id", auth, async (req, res) => {
   try {
     const user = await User.findById(req.params.id); // .findById() is a convenient helper
     if (!user) {
@@ -53,7 +55,7 @@ router.get("/:id", async (req, res) => {
 });
 
 // CREATE a new user (POST)
-router.post("/", async (req, res) => {
+router.post("/", auth, async (req, res) => {
   // Create a new user object based on our Model
   const user = new User({
     name: req.body.name,
@@ -70,7 +72,7 @@ router.post("/", async (req, res) => {
 });
 
 // DELETE a user by ID
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", auth, async (req, res) => {
   try {
     const user = await User.findByIdAndDelete(req.params.id);
     if (!user) {
@@ -83,7 +85,7 @@ router.delete("/:id", async (req, res) => {
 });
 
 // UPDATE a user by ID (PUT)
-router.put("/:id", async (req, res) => {
+router.put("/:id", auth, async (req, res) => {
   try {
     const updatedUser = await User.findByIdAndUpdate(
       req.params.id, // The ID of the user to find
@@ -108,8 +110,8 @@ router.put("/:id", async (req, res) => {
 // --- 4. EXPORT THE ROUTER ---
 // module.exports = router;
 module.exports = {
-    userRouter: router,
-    User: User
+  userRouter: router,
+  User: User,
 };
 
 // Key Changes and Explanations:
