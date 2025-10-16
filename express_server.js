@@ -1,3 +1,6 @@
+// Load environment variables from .env (early)
+require("dotenv").config();
+
 // 1. Require the express module
 const express = require("express");
 

@@ -20,8 +20,9 @@ function auth(req, res, next) {
   try {
     // 3. Verify the token
     // jwt.verify() will decode the token. If the signature is invalid or it's expired, it will throw an error.
-    // const decodedPayload = jwt.verify(token, 'mySecretKey'); // Use the same secret key from your login route
-    const decodedPayload = jwt.verify(token, process.env.JWT_SECRET); // <-- USE THE SAME ENV VARIABLE
+    // Use the same secret as in the login route, with a dev fallback
+    //const jwtSecret = process.env.JWT_SECRET || 'mySecretKey';
+    const decodedPayload = jwt.verify(token, process.env.JWT_SECRET);
 
     // 4. Attach the user to the request object
     // The payload we created in the login route was { user: { id: user.id } }
